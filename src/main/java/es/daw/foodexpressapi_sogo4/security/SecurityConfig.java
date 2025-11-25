@@ -80,10 +80,9 @@ public class SecurityConfig {
                 // Esto actúa antes del controlador
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**","/h2-console/**").permitAll() // pública para login/register
-//                        .requestMatchers(HttpMethod.GET,"/api/productos").permitAll()
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()//publicos
-//                        .requestMatchers(HttpMethod.POST,"/api/productos").authenticated() //emviar jwt, da igual el rol
-//                        .requestMatchers(HttpMethod.PUT,"/api/productos/**").hasRole("ADMIN")
+                        // Permite todas las peticiones POST que empiecen por /api/ sin necesidad de token
+                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
                         .anyRequest().authenticated() //emviar jwt
                 )
                 .authenticationProvider(authenticationProvider())
