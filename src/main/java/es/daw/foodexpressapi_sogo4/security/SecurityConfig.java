@@ -82,7 +82,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**","/h2-console/**").permitAll() // pública para login/register
                         .requestMatchers(HttpMethod.GET,"/api/**").permitAll()//publicos
                         // Permite todas las peticiones POST que empiecen por /api/ sin necesidad de token
-                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/api/**").permitAll()
                         .anyRequest().authenticated() //emviar jwt
                 )
                 .authenticationProvider(authenticationProvider())

@@ -38,8 +38,8 @@ public class User implements UserDetails {
     // Relacion bidreccional. Usuario es el lado propietario, porque tiene la tabla intermedia users_roles
     // fetch = FetchType.EAGER indica que los roles se cargan siempre junto con el usuario,
     // lo cual es necesario porque Spring Security los necesita inmediatamente para construir las autoridades.
-    @ManyToOne(fetch = FetchType.EAGER)
-
+    @ManyToOne
+    @JoinColumn(name="role_id")
     private Role role;
 
 

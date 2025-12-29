@@ -25,7 +25,4 @@ public class Dish {
     @ManyToOne(fetch = FetchType.EAGER)
     private Restaurant restaurant;
 
-
-
-
 }
