@@ -4,11 +4,12 @@ INSERT INTO roles (name) VALUES ('CLIENT');
 INSERT INTO roles (name) VALUES ('DELIVERY');
 
 -- Usuarios
+-- Usuarios con contraseña 'melola' encriptada para todos
 INSERT INTO users (username, password, full_name, email, role_id) VALUES
-                                                                      ('admin', 'admin123', 'Admin Root', 'admin@foodexpress.com', 1),
-                                                                      ('juan', '1234', 'Juan Pérez', 'juan@correo.com', 2),
-                                                                      ('maria', '1234', 'María López', 'maria@correo.com', 2),
-                                                                      ('repa1', '1234', 'Repartidor Uno', 'repa1@correo.com', 3);
+                                                                      ('admin', '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK', 'Admin Root', 'admin@foodexpress.com', 1),
+                                                                      ('juan', '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK', 'Juan Pérez', 'juan@correo.com', 2),
+                                                                      ('maria', '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK', 'María López', 'maria@correo.com', 2),
+                                                                      ('repa1', '$2a$10$IKp9rdPtsq4/L28Ivj85yOI0nyTRwKX1fHZfXDAKRePHQUD2vATGK', 'Repartidor Uno', 'repa1@correo.com', 3);
 
 -- Restaurantes
 INSERT INTO restaurants (name, address, phone) VALUES
@@ -37,17 +38,28 @@ INSERT INTO dishes (name, price, category, restaurant_id) VALUES
 
 
 -- Pedidos
+-- Más pedidos de prueba para orders
 INSERT INTO orders (order_date, status, user_id, restaurant_id) VALUES
-                                                                    ('2025-10-01 12:00:00', 'ENTREGADO', 2, 1),
-                                                                    ('2025-10-02 13:00:00', 'PREPARANDO', 3, 2),
-                                                                    ('2025-10-03 20:15:00', 'ENTREGADO', 2, 3);
+                                                                    ('2025-10-04 14:20:00', 'ENTREGADO', 3, 1),
+                                                                    ('2025-10-05 21:10:00', 'EN_CAMINO', 2, 2),
+                                                                    ('2025-10-06 13:45:00', 'PENDIENTE', 3, 3),
+                                                                    ('2025-10-07 19:30:00', 'CANCELADO', 2, 1),
+                                                                    ('2025-10-08 12:15:00', 'PREPARANDO', 3, 2),
+                                                                    ('2025-10-09 20:50:00', 'ENTREGADO', 2, 3),
+                                                                    ('2025-10-10 15:00:00', 'PENDIENTE', 3, 1),
+                                                                    ('2025-10-11 22:30:00', 'EN_CAMINO', 2, 2),
+                                                                    ('2025-10-12 11:00:00', 'ENTREGADO', 3, 3),
+                                                                    ('2025-10-13 18:00:00', 'PREPARANDO', 2, 1);
 
 
 -- Detalles pedidos
-INSERT INTO order_details VALUES (1, 1, 2, 17.00);
-INSERT INTO order_details VALUES (1, 10, 1, 4.50);
+-- id_order(PK), id_dish (PK), cantidad, subtotal (precio del plato x cantidad)
+INSERT INTO order_details VALUES (1, 1, 2, 17.00); -- pedidoBurguerKing nº1, Whopper(1), 2 whopper (cantidad), precio total (8,45 cada whopper)
+INSERT INTO order_details VALUES (1, 10, 1, 4.50); -- pedidoBurguerKing nº2, krispy chocken(10), 1(cantidad), precio total (4,5)
+
 INSERT INTO order_details VALUES (2, 4, 1, 11.50);
 INSERT INTO order_details VALUES (2, 5, 1, 12.00);
+
 INSERT INTO order_details VALUES (3, 7, 1, 13.50);
 INSERT INTO order_details VALUES (3, 8, 1, 12.90);
 INSERT INTO order_details VALUES (3, 12, 1, 6.20);

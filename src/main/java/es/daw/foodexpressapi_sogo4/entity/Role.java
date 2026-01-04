@@ -1,5 +1,6 @@
 package es.daw.foodexpressapi_sogo4.entity;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

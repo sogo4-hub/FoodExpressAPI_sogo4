@@ -42,6 +42,10 @@ public class User implements UserDetails {
     @JoinColumn(name="role_id")
     private Role role;
 
+    // En es.daw.foodexpressapi.entity.User
+    @OneToMany(mappedBy = "user") // "user" es el nombre del atributo en la clase Order
+    private List<Order> orders = new ArrayList<>();
+
 
     // --------------------- 5 MÉTODOS DE LA INTERFACE UserDetails -----------------
 

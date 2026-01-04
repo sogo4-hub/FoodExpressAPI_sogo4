@@ -7,6 +7,8 @@ import es.daw.foodexpressapi_sogo4.entity.Restaurant;
 import es.daw.foodexpressapi_sogo4.repository.DishRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -14,9 +16,12 @@ import java.util.List;
 @Service
 public class DishService {
     private final DishRepository dishRepository;
-    public List<DishDTO> getAllDishes() {
-        List<Dish> dishes= dishRepository.findAll();
-        return dishes.stream().map(this::toDTO).toList();
+    public Page<DishDTO> getAllDishes(Pageable pageable) {
+        // 1. Buscamos la página de entidades en la BD
+        Page<Dish> pageDishes = dishRepository.findAll(pageable);
+
+        // 2. Mapeamos cada entidad Dish a DishDTO manteniendo la estructura de página
+        return pageDishes.map(this::toDTO);
     }
 
     private DishDTO toDTO(Dish dish){
