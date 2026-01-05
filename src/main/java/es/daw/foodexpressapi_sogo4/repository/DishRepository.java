@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface DishRepository extends JpaRepository<Dish, Long> {
-    public List<Dish> findAll();
+    List<Dish> findAll();
+    List<Dish> findByRestaurantId(Long restauranteId);
 
 }
