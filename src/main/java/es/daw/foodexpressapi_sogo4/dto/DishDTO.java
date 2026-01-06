@@ -46,4 +46,7 @@ public class DishDTO {
             message = "Restaurant name contains invalid characters"
     )
     private String restaurantName;
+    // --- NUEVOS CAMPOS ---
+    private String restaurantAddress;
+    private String restaurantPhone;
 }

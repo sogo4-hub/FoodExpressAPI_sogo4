@@ -21,8 +21,11 @@ public class OrderController {
     public ResponseEntity<List<OrderResponseDTO>> getOrders(
             @RequestParam(required = false) String status,
             @RequestParam(required = false) Long userId,
-            @RequestParam(required = false) Long restaurantId) {
-
-        return ResponseEntity.ok(orderService.searchOrders(status, userId, restaurantId));
+            @RequestParam(required = false) Long restaurantId,
+            @RequestParam(defaultValue = "id") String sortBy,    // Nuevo
+            @RequestParam(defaultValue = "ASC") String direction // Nuevo
+    ) {
+        // Pasamos los nuevos parámetros al servicio
+        return ResponseEntity.ok(orderService.searchOrders(status, userId, restaurantId, sortBy, direction));
     }
 }

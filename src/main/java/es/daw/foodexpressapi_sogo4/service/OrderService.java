@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import org.springframework.data.domain.Sort; // Añadir este import
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final RestaurantRepository restaurantRepository;
 
-    public List<OrderResponseDTO> searchOrders(String statusStr, Long userId, Long restaurantId) {
+    public List<OrderResponseDTO> searchOrders(String statusStr, Long userId, Long restaurantId, String sortBy, String direction) {
         OrderStatus status = null;
 
         // 1. Validación de Status: Solo validamos si NO es nulo y NO está vacío
@@ -47,7 +48,38 @@ public class OrderService {
         }
 
         // 4. Búsqueda en repositorio y mapeo a DTO
-        return orderRepository.findByFilters(status, userId, restaurantId)
+        // --- LÓGICA DE ORDENACIÓN ---
+
+        // 1. Campo por defecto
+        String sortField = (sortBy == null || sortBy.trim().isEmpty()) ? "id" : sortBy;
+
+        // 2. Mapeo de campos DTO -> Entidad JPA (VERSIÓN IF-ELSE)
+        if ("username".equals(sortField)) {
+            sortField = "user.username";
+        } else if ("restaurantName".equals(sortField)) {
+            sortField = "restaurant.name";
+        } else if ("orderDate".equals(sortField)) {
+            sortField = "orderDate";
+        } else if ("status".equals(sortField)) {
+            sortField = "status";
+        } else {
+            // Default: Fallback seguro para cualquier otro valor no reconocido
+            sortField = "id";
+        }
+
+        // DEBUG: Descomenta esto si quieres ver en la consola qué está pasando
+        System.out.println("API ORDENANDO POR: " + sortField + " (" + direction + ")");
+
+        // 3. Dirección (Por defecto ASC si no se especifica)
+        Sort.Direction sortDirection = Sort.Direction.ASC;
+        if (direction != null && direction.equalsIgnoreCase("DESC")) {
+            sortDirection = Sort.Direction.DESC;
+        }
+
+        Sort sort = Sort.by(sortDirection, sortField);
+
+        // --- BÚSQUEDA ---
+        return orderRepository.findByFilters(status, userId, restaurantId, sort)
                 .stream()
                 .map(this::toResponseDTO)
                 .toList();

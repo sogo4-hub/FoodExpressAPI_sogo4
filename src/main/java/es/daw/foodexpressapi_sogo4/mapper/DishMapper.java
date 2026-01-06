@@ -12,10 +12,13 @@ import java.util.List;
 
 public interface DishMapper {
     Dish toEntity(DishDTO dishDTO);
-    // Indicamos a MapStruct de dónde sacar el nombre del restaurante
+
+    // Mapeamos los datos anidados del restaurante a campos planos del DTO
     @Mapping(source = "restaurant.name", target = "restaurantName")
+    @Mapping(source = "restaurant.address", target = "restaurantAddress") // Nuevo
+    @Mapping(source = "restaurant.phone", target = "restaurantPhone")     // Nuevo
     DishDTO toDTO(Dish dish);
+
     List<DishDTO> toDTOs(List<Dish> dishes);
     List<Dish> toEntities(List<DishDTO> dishesDTOs);
-
 }
